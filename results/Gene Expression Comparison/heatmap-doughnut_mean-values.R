@@ -3,13 +3,13 @@ library(ggplot2)
 library("scales")
 library("ggsci")
 
-setwd("") #CHANGE WORKING DIRECTORY TO GET THE CODE WORKING
+setwd("C:/Users/rojas/Desktop/Trabajo Jessi/envio_jessi/") #CHANGE WORKING DIRECTORY TO GET THE CODE WORKING
 
 #Loading matrices
-classes = read.csv('./GENERATED_MATRICES/PRAD/classes.csv',sep = ';', header = TRUE)
-gene_names = read.csv('./GENERATED_MATRICES/PRAD/gene_names.csv',sep = ';', header = TRUE)
-synth_mat = read.csv('./GENERATED_MATRICES/PRAD/synth_exp_matrix.csv',sep = ';', header = TRUE)
-real_mat = read.csv('./GENERATED_MATRICES/PRAD/real_exp_matrix.csv',sep = ';', header = TRUE)
+classes = read.csv('./FINAL_MAT/BRCA/classes.csv',sep = ';', header = TRUE)
+gene_names = read.csv('./FINAL_MAT/BRCA/gene_names.csv',sep = ';', header = TRUE)
+synth_mat = read.csv('./FINAL_MAT/BRCA/synth_exp_matrix.csv',sep = ';', header = TRUE)
+real_mat = read.csv('./FINAL_MAT/BRCA/real_exp_matrix.csv',sep = ';', header = TRUE)
 
 #Making classes as factor
 classes = as.factor(classes$class)
@@ -18,7 +18,7 @@ classes = as.factor(classes$class)
 disenio=model.matrix(~0+classes)
 colnames(disenio)= levels(classes)
 head(disenio)
-apply(disenio,�2,�sum)
+apply(disenio,2,sum)
 
 #Selecting randomly a column from synth matrix
 synth_mat<-as.data.frame(rowMeans(synth_mat[,disenio[,'Primary Tumor'] == 1]))
@@ -62,7 +62,7 @@ p2 = ggplot(merged_matrix, aes(x=gene, y=var2, fill=values)) +
   geom_tile(colour="white") +
   geom_text(data=merged_matrix.labs, aes(x=gene, y=var2+1.5, #1.5 permite que se aleje del centro
                                          label=gene, angle=ang, hjust=hjust), size=3) +
-  scale_fill_gradient(low = "white", high = "#B71B1BFF", limits = c(0.0,20.0)) +
+  scale_fill_gradient(low = "white", high = "#2F5B91FF", limits = c(0.0,20.0)) +
   ylim(c(0, max(merged_matrix$var2)+1.5)) +
   scale_y_discrete(breaks=y_breaks, labels=y_labels, limits=factor(1,2)) +
   coord_polar(theta="x") +
